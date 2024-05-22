@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import type { FormProps } from 'antd';
-import { Col, Row, Card, Typography, Button, Form, Input } from 'antd';
+import { Col, Row, Card, Typography, Button, Form, Input, message } from 'antd';
 import Layout from '@/components/layout/layout';
 import Link from 'next/link'
 import charactersServices from '@/services/characters.services';
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 
 const { Title } = Typography;
 
@@ -39,18 +40,32 @@ const FormCharacter = (props: any) => {
         };
     }, []);
 
+    const messageAlert = (type:any, message:string, title:string,  redirect:boolean) => {
+        Swal.fire({
+            title: title,
+            text: message,
+            icon: type,
+            confirmButtonText: "OK",
+        }).then(() =>{
+            if(redirect){
+                router.push('/')
+            }
+        })
+      }
+
     const onFinish: FormProps<CharacterType>['onFinish'] = (values) => {
         if(id === 'new'){
             charactersServices.post(values).then((response) => {
-                console.log(response);
+                messageAlert('success', 'Registro creado correctamente!', 'Creado!', true);
             }).catch((error) => {
                 console.log(error);
+                messageAlert('error', 'Error al crear el registro!', 'Error!', false);
             });
         }else{
             charactersServices.put(values, id).then((response) => {
-                console.log(response);
+                messageAlert('success', 'Registro actualizado correctamente!', 'Actualizado!', true);
             }).catch((error) => {
-                console.log(error);
+                messageAlert('error', 'Error al actualizar el registro!', 'Error!', false);
             });
         }
     }
@@ -95,7 +110,7 @@ const FormCharacter = (props: any) => {
                             name="weight"
                             rules={[{ required: true, message: 'Peso es obligatorio!' }]}
                         >
-                            <Input />
+                            <Input placeholder='40 kg' />
                         </Form.Item>
                     </Col>
                     <Col span={12} style={style}>
@@ -104,7 +119,7 @@ const FormCharacter = (props: any) => {
                             name="height"
                             rules={[{ required: true, message: 'Altura es obligatorio!' }]}
                         >
-                            <Input />
+                            <Input placeholder='1.50 m' />
                         </Form.Item>
                     </Col>
                 </Row>

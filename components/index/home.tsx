@@ -64,8 +64,8 @@ const Home = (props: any) => {
                     <Col span={8} key={character.id} style={style}>
                         <Card title={character.name}>
                             <div>Raza: {character.breed}</div>
-                            <div>Edad: {character.weight} kg</div>
-                            <div>Altura: {character.height} cm</div>
+                            <div>Edad: {character.weight}</div>
+                            <div>Altura: {character.height}</div>
                             <div>Poder/Arma: {character.power}</div>
                             <Row>
                                 <Col span={12} style={style}>
