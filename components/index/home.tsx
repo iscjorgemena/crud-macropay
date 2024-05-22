@@ -60,6 +60,7 @@ const Home = (props: any) => {
                 </Col>
             </Row>
             <Row>
+                {characters.length === 0 && <Title level={4}>No hay registros</Title>}
                 {characters.map((character: any) => (
                     <Col span={8} key={character.id} style={style}>
                         <Card title={character.name}>

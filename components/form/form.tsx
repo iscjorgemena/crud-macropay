@@ -1,44 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import type { FormProps } from 'antd';
-import { Col, Row, Card, Typography, Button, Form, Input, message } from 'antd';
-import Layout from '@/components/layout/layout';
+import React, { useEffect, useState } from 'react'
+import type { FormProps } from 'antd'
+import { Col, Row, Card, Typography, Button, Form, Input } from 'antd'
+import Layout from '@/components/layout/layout'
 import Link from 'next/link'
-import charactersServices from '@/services/characters.services';
+import charactersServices from '@/services/characters.services'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 type CharacterType = {
-    name: string;
-    breed: string;
-    weight: number;
-    height: number;
-    power: string;
-};
-
-
-
-;
+    name: string
+    breed: string
+    weight: number
+    height: number
+    power: string
+}
 
 const FormCharacter = (props: any) => {
-    const style = { padding: '10px 10px' };
-    const { id, character } = props;
+    const style = { padding: '10px 10px' }
+    const { id, character } = props
     const router = useRouter()
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if(character !== null){
-            form.setFieldsValue(character);
+            form.setFieldsValue(character)
         }else{
             if(id !== 'new'){
-                router.push('/');
-                return;
+                router.push('/')
+                return
             }
         }
         return () => {
-        };
-    }, []);
+        }
+    }, [])
 
     const messageAlert = (type:any, message:string, title:string,  redirect:boolean) => {
         Swal.fire({
@@ -53,21 +50,23 @@ const FormCharacter = (props: any) => {
         })
       }
 
-    const onFinish: FormProps<CharacterType>['onFinish'] = (values) => {
+    const onFinish: FormProps<CharacterType>['onFinish'] = async (values) => {
+        setLoading(true)
         if(id === 'new'){
-            charactersServices.post(values).then((response) => {
-                messageAlert('success', 'Registro creado correctamente!', 'Creado!', true);
+            await charactersServices.post(values).then((response) => {
+                messageAlert('success', 'Registro creado correctamente!', 'Creado!', true)
             }).catch((error) => {
-                console.log(error);
-                messageAlert('error', 'Error al crear el registro!', 'Error!', false);
-            });
+                console.log(error)
+                messageAlert('error', 'Error al crear el registro!', 'Error!', false)
+            })
         }else{
-            charactersServices.put(values, id).then((response) => {
-                messageAlert('success', 'Registro actualizado correctamente!', 'Actualizado!', true);
+            await charactersServices.put(values, id).then((response) => {
+                messageAlert('success', 'Registro actualizado correctamente!', 'Actualizado!', true)
             }).catch((error) => {
-                messageAlert('error', 'Error al actualizar el registro!', 'Error!', false);
-            });
+                messageAlert('error', 'Error al actualizar el registro!', 'Error!', false)
+            })
         }
+        setLoading(false)
     }
 
     return (
@@ -139,7 +138,7 @@ const FormCharacter = (props: any) => {
                 <Row>
                     <Col span={2} style={style}>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" loading={loading} disabled={loading}>
                                 Guardar
                             </Button>
                         </Form.Item>
@@ -147,7 +146,7 @@ const FormCharacter = (props: any) => {
                     <Col span={12} style={style}>
                         <Form.Item>
                             <Link href="/">
-                                <Button type="default">
+                                <Button type="default" loading={loading} disabled={loading}>
                                     Cancelar
                                 </Button>
                             </Link>
@@ -159,4 +158,4 @@ const FormCharacter = (props: any) => {
     )
 }
 
-export default FormCharacter;
+export default FormCharacter
