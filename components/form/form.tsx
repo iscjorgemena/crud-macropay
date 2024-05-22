@@ -72,7 +72,7 @@ const FormCharacter = (props: any) => {
     return (
         <Layout>
             <Row>
-                <Col span={20} style={style}>
+                <Col span={24} style={style}>
                     <Title>{id !== 'new' ? 'Editar':'Crear'} Registro</Title>
                 </Col>
             </Row>
@@ -83,7 +83,7 @@ const FormCharacter = (props: any) => {
                 form={form}
             >
                 <Row>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={24} style={style}>
                         <Form.Item<CharacterType>
                             label="Nombre"
                             name="name"
@@ -92,7 +92,7 @@ const FormCharacter = (props: any) => {
                             <Input />
                         </Form.Item>
                     </Col>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={24} style={style}>
                         <Form.Item<CharacterType>
                             label="Raza"
                             name="breed"
@@ -103,7 +103,7 @@ const FormCharacter = (props: any) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={24} style={style}>
                         <Form.Item<CharacterType>
                             label="Peso"
                             name="weight"
@@ -112,7 +112,7 @@ const FormCharacter = (props: any) => {
                             <Input placeholder='40 kg' />
                         </Form.Item>
                     </Col>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={24} style={style}>
                         <Form.Item<CharacterType>
                             label="Altura"
                             name="height"
@@ -123,7 +123,7 @@ const FormCharacter = (props: any) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={24} style={style}>
                         <Form.Item<CharacterType>
                             label="Poder/Arma"
                             name="power"
@@ -136,14 +136,14 @@ const FormCharacter = (props: any) => {
 
 
                 <Row>
-                    <Col span={2} style={style}>
+                    <Col md={2} xs={12} style={style}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" loading={loading} disabled={loading}>
                                 Guardar
                             </Button>
                         </Form.Item>
                     </Col>
-                    <Col span={12} style={style}>
+                    <Col md={12} xs={12} style={style}>
                         <Form.Item>
                             <Link href="/">
                                 <Button type="default" loading={loading} disabled={loading}>
